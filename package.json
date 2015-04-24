@@ -1,0 +1,39 @@
+{
+  "name": "random-guid",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "peerDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:svenanders/random-guid.git"
+  },
+  "homepage": "https://www.robbestad.com",
+  "keywords": [
+    "random",
+    "guid"
+  ],
+  "author": {
+    "name": "Sven Anders Robbestad",
+    "email": "anders@robbestad.com",
+    "url": "http://www.robbestad.com"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha spec.js"
+  },
+  "license": "ISC",
+  "contributors": [{
+    "name": "Sven Anders Robbestad",
+    "email": "robbestad@gmail.com"
+  }],
+  "readme": "Generate a random GUID",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/svenanders/random-guid/issues"
+  },
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "mocha": "^2.2.4"
+  }
+}
