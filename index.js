@@ -38,7 +38,7 @@ function domSafeRandomGuid(numberOfBlocks) {
     }
 
     if (null === document.getElementById(output)) {
-        randomSafeGuid(numberOfBlocks);
+        domSafeRandomGuid(numberOfBlocks);
     } else {
         return output;
     }
