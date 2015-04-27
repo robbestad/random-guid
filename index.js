@@ -8,6 +8,7 @@ function randomGuid(numberOfBlocks) {
             .toString(16)
             .substring(1);
     }
+
     var output = '';
     var num = numberOfBlocks;
     while (num > 0) {
@@ -38,9 +39,9 @@ function domSafeRandomGuid(numberOfBlocks) {
     }
 
     if (null === document.getElementById(output)) {
-        domSafeRandomGuid(numberOfBlocks);
-    } else {
         return output;
+    } else {
+        domSafeRandomGuid(numberOfBlocks);
     }
 }
 module.exports = domSafeRandomGuid;
