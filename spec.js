@@ -7,17 +7,17 @@ var expect = require('chai')
 	.expect;
 
 var assert = require("assert");
-describe('render markdown from README.md', function() {
+describe('generate random GUIDS', function() {
 	jsdom();
 
 	it('should return a random GUID', function() {
-		var random = randomGuid();
-		assert.equal(typeof random, "string");
+		expect(randomGuid())
+			.to.have.length.of.at.least(4);
 	})
 
 	it('should return a DOM safe GUID', function() {
-		var random = domSafeRandomGuid();
-		assert.equal(typeof random, "string");
+		expect(domSafeRandomGuid())
+			.to.have.length.of.at.least(4);
 	})
 
 })

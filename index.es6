@@ -1,13 +1,13 @@
 "use strict";
 
-function randomGuid() {
-    var numberOfBlocks = arguments[0] === undefined ? 4 : arguments[0];
-
+function randomGuid(numberOfBlocks = 4) {
     function s4() {
-        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
     }
 
-    var output = "";
+    var output = '';
     var num = numberOfBlocks;
     while (num > 0) {
         output += s4();
@@ -19,14 +19,14 @@ function randomGuid() {
 exports.randomGuid = randomGuid;
 
 //generate a guid that is tested unique against id's on the current doc
-function domSafeRandomGuid() {
-    var numberOfBlocks = arguments[0] === undefined ? 4 : arguments[0];
-
+function domSafeRandomGuid(numberOfBlocks = 4) {
     function s4() {
-        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
     }
 
-    var output = "";
+    var output = '';
     var num = numberOfBlocks;
     while (num > 0) {
         output += s4();
@@ -41,4 +41,3 @@ function domSafeRandomGuid() {
     }
 }
 exports.domSafeRandomGuid = domSafeRandomGuid;
-

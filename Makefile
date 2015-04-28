@@ -1,14 +1,16 @@
-BIN = ./node_modules/.bin
-uglify = /usr/local/lib/node_modules/uglify-js/bin/uglifyjs
+uglify = ./node_modules/.bin/uglifyjs
+babel = ./node_modules/.bin/babel
 
 install link:
 	@npm $@
 
 test:
+	@$(call babel)
+	@$(call lint)
 	npm test
 
 lint:
-	eslint ./index.js
+	./node_modules/.bin/eslint index.es6
 
 patch: test
 	@$(call release,patch)
@@ -19,12 +21,18 @@ minor: test
 major: test 
 	@$(call release,major)
 
-jsx: test
-	gulp	
-
-publish:  
+babel:
+	@$(babel) index.es6 > index.js
+	
+minify:
 	@$(uglify) index.js > dist/random-guid.min.js
-	git commit -am "new release" --allow-empty
+	
+publish:
+	@$(call test)
+	@(sh bin/authors)
+	@$(call minify)
+	git commit -am "`npm view . version`" --allow-empty
+	@$(call release,patch)
 	git push --tags origin HEAD:master
 	npm publish
 
