@@ -18,7 +18,7 @@ function randomGuid(numberOfBlocks) {
     }
     return output;
 }
-module.exports = randomGuid;
+exports.randomGuid = randomGuid;
 
 //generate a guid that is tested unique against id's on the current doc
 function domSafeRandomGuid(numberOfBlocks) {
@@ -44,4 +44,4 @@ function domSafeRandomGuid(numberOfBlocks) {
         domSafeRandomGuid(numberOfBlocks);
     }
 }
-module.exports = domSafeRandomGuid;
+exports.domSafeRandomGuid = domSafeRandomGuid;
