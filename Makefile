@@ -4,23 +4,26 @@ uglify = /usr/local/lib/node_modules/uglify-js/bin/uglifyjs
 install link:
 	@npm $@
 
+test:
+	npm test
+
 lint:
 	jsxhint -c .jshintrc ./index.js
 
-patch: lint
+patch: test
 	@$(call release,patch)
 
-minor: lint 
+minor: test 
 	@$(call release,minor)
 
-major: lint 
+major: test 
 	@$(call release,major)
 
-jsx: lint
+jsx: test
 	gulp	
 
-publish: jsx 
-	@$(uglify) index.js > dist/react-markdown-to-html.min.js
+publish:  
+	@$(uglify) index.js > dist/random-guid.min.js
 	git commit -am "new release" --allow-empty
 	git push --tags origin HEAD:master
 	npm publish
