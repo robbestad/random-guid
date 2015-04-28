@@ -8,7 +8,7 @@ test:
 	npm test
 
 lint:
-	jsxhint -c .jshintrc ./index.js
+	eslint ./index.js
 
 patch: test
 	@$(call release,patch)
