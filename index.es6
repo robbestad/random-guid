@@ -1,21 +1,59 @@
 "use strict";
+var os = require('os');
+var md5 = require('MD5');
 
-function randomGuid(numberOfBlocks = 4) {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
+function chunkSubstr(str, size) {
+  var numChunks = str.length / size + .5 | 0,
+      chunks = new Array(numChunks);
 
-    var output = '';
-    var num = numberOfBlocks;
-    while (num > 0) {
-        output += s4();
-        if (num > 1) output += "-";
-        num--;
-    }
-    return output;
+  for(var i = 0, o = 0; i < numChunks; ++i, o += size) {
+    chunks[i] = str.substr(o, size);
+  }
+
+  return chunks;
 }
+
+var bigrandom = function bigrandom(salt="s") {
+    return md5(salt + Math.random() + 
+               Math.random() + Math.random() + Math.random() +
+               new Date().getTime() +
+               JSON.stringify(arguments) +
+               os.hostname() +
+               os.freemem() +
+               JSON.stringify(os.cpus()) +
+               JSON.stringify(os.networkInterfaces()) +
+               JSON.stringify(os.loadavg()) +
+               process.pid +
+               process.hrtime() +
+               process.memoryUsage() +
+               os.uptime());
+}
+
+function randomString(salt = "random-guid") {
+    return bigrandom(salt);
+    }
+exports.randomString = randomString;
+
+function randomGuid(numberOfBlocks = 4, 
+        blockLength = 4, 
+        salt = "random-guid") {
+    let strLength=numberOfBlocks * blockLength;
+    let randomString = bigrandom();
+    while(strLength > 32){
+        randomString += bigrandom();
+        strLength -= 32;
+    }
+    const chunks=chunkSubstr(randomString,blockLength);
+    const chunkedArray = chunks.map(v => v.toString(16));
+    let output=[chunkedArray[0]];
+    let i = chunkedArray.length;
+   
+    for(let i = 1; i < numberOfBlocks; i++){
+        output.push(chunkedArray[i]);
+    }
+    return output.join('-');
+    //return chunks.map(v => v.toString(16)).join('-');
+    }
 exports.randomGuid = randomGuid;
 
 //generate a guid that is tested unique against id's on the current doc

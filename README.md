@@ -4,7 +4,11 @@
 
 When making edits, please edit _index.es6_. _index.js_ will be generated automatically when you run _make test_.
 
-### randomGuid([int blocks])
+### randomString([string salt])
+
+Generate a random string 
+
+### randomGuid([int numberOfBlocks, [int blockLength, [string salt]]])
 
 Generate a random guid, separated with dashes. 
 

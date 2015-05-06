@@ -4,7 +4,7 @@ babel = ./node_modules/.bin/babel
 install link:
 	@npm $@
 
-test:
+spec:
 	@$(call babel)
 	@$(call lint)
 	npm test

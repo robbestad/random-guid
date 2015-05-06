@@ -3,7 +3,9 @@
   "version": "0.0.3",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "MD5": "^1.2.1"
+  },
   "peerDependencies": {},
   "repository": {
     "type": "git",
