@@ -3,7 +3,7 @@ var os = require('os');
 var md5 = require('MD5');
 
 function chunkSubstr(str, size) {
-  var numChunks = str.length / size + .5 | 0,
+  var numChunks = str.length / size + 0.5 | 0,
       chunks = new Array(numChunks);
 
   for(var i = 0, o = 0; i < numChunks; ++i, o += size) {
@@ -38,12 +38,12 @@ function randomGuid(numberOfBlocks = 4,
         blockLength = 4, 
         salt = "random-guid") {
     let strLength=numberOfBlocks * blockLength;
-    let randomString = bigrandom();
+    let rnd = bigrandom();
     while(strLength > 32){
-        randomString += bigrandom();
+        rnd += bigrandom();
         strLength -= 32;
     }
-    const chunks=chunkSubstr(randomString,blockLength);
+    const chunks=chunkSubstr(rnd,blockLength);
     const chunkedArray = chunks.map(v => v.toString(16));
     let output=[chunkedArray[0]];
     let i = chunkedArray.length;
@@ -75,7 +75,7 @@ function domSafeRandomGuid(numberOfBlocks = 4) {
     if (null === document.getElementById(output)) {
         return output;
     } else {
-        domSafeRandomGuid(numberOfBlocks);
+        return domSafeRandomGuid(numberOfBlocks);
     }
 }
 exports.domSafeRandomGuid = domSafeRandomGuid;
