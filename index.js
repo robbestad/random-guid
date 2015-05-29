@@ -16,7 +16,7 @@ function chunkSubstr(str, size) {
 var bigrandom = function bigrandom() {
     var salt = arguments[0] === undefined ? 's' : arguments[0];
 
-    return md5(salt + Math.random() + Math.random() + Math.random() + Math.random() + new Date().getTime() + JSON.stringify(arguments) + ('hostname' in os ? os.hostname() : '') + ('freemem' in os ? os.freemem() : '') + ('cpus' in os ? JSON.stringify(os.cpus()) : '')('networkInterfaces' in os ? JSON.stringify(os.networkInterfaces()) : '')('loadavg' in os ? JSON.stringify(os.loadavg()) : '')('pid' in process ? process.pid : '') + ('hrtime' in process ? process.hrtime() : '') + ('memoryUsage' in process ? process.memoryUsage() : '') + ('uptime' in os ? os.uptime() : ''));
+    return md5(salt + Math.random() + Math.random() + Math.random() + Math.random() + new Date().getTime() + JSON.stringify(arguments) + os.hostname() + os.freemem() + JSON.stringify(os.cpus()) + JSON.stringify(os.networkInterfaces()) + JSON.stringify(os.loadavg()) + process.pid + process.hrtime() + process.memoryUsage() + os.uptime());
 };
 
 function randomString() {
