@@ -18,11 +18,11 @@ var bigrandom = function bigrandom(salt="s") {
                Math.random() + Math.random() + Math.random() +
                new Date().getTime() +
                JSON.stringify(arguments) +
-               os.hostname() +
-               os.freemem() +
-               JSON.stringify(os.cpus()) +
-               JSON.stringify(os.networkInterfaces()) +
-               JSON.stringify(os.loadavg())+
+               ('hostname' in os ? os.hostname() : '' )+
+               ('freemem' in os ? os.freemem() : '' )+
+               ('cpus' in os ? JSON.stringify(os.cpus()) : '' )
+               ('networkInterfaces' in os ? JSON.stringify(os.networkInterfaces()) : '' )
+               ('loadavg' in os ? JSON.stringify(os.loadavg()) : '' )
                ('pid' in process ? process.pid : '' )+
                ('hrtime' in process ? process.hrtime() : '' )+
                ('memoryUsage' in process ? process.memoryUsage() : '' )+
