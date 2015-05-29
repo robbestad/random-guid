@@ -23,10 +23,11 @@ var bigrandom = function bigrandom(salt="s") {
                JSON.stringify(os.cpus()) +
                JSON.stringify(os.networkInterfaces()) +
                JSON.stringify(os.loadavg()) +
-               process.pid +
-               process.hrtime() +
-               process.memoryUsage() +
-               os.uptime());
+               ('pid' in process ? process.pid : '' )+
+               ('hrtime' in process ? process.hrtime() : '' )+
+               ('memoryUsage' in process ? process.memoryUsage() : '' )+
+               ('uptime' in os ? os.uptime() : '' )
+               );
 }
 
 function randomString(salt = "random-guid") {
