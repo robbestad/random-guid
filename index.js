@@ -16,7 +16,7 @@ function chunkSubstr(str, size) {
 var bigrandom = function bigrandom() {
     var salt = arguments[0] === undefined ? 's' : arguments[0];
 
-    return md5(salt + Math.random() + Math.random() + Math.random() + Math.random() + new Date().getTime() + JSON.stringify(arguments) + os.hostname() + os.freemem() + JSON.stringify(os.cpus()) + JSON.stringify(os.networkInterfaces()) + JSON.stringify(os.loadavg()) + process.pid + process.hrtime() + process.memoryUsage() + os.uptime());
+    return md5(salt + Math.random() + Math.random() + Math.random() + Math.random() + new Date().getTime() + JSON.stringify(arguments) + os.hostname() + os.freemem() + JSON.stringify(os.cpus()) + JSON.stringify(os.networkInterfaces()) + JSON.stringify(os.loadavg()) + ('pid' in process ? process.pid : '') + ('hrtime' in process ? process.hrtime() : '') + ('memoryUsage' in process ? process.memoryUsage() : '') + ('uptime' in os ? os.uptime() : ''));
 };
 
 function randomString() {
@@ -32,12 +32,12 @@ function randomGuid() {
     var salt = arguments[2] === undefined ? 'random-guid' : arguments[2];
 
     var strLength = numberOfBlocks * blockLength;
-    var randomString = bigrandom();
+    var rnd = bigrandom();
     while (strLength > 32) {
-        randomString += bigrandom();
+        rnd += bigrandom();
         strLength -= 32;
     }
-    var chunks = chunkSubstr(randomString, blockLength);
+    var chunks = chunkSubstr(rnd, blockLength);
     var chunkedArray = chunks.map(function (v) {
         return v.toString(16);
     });
@@ -54,24 +54,34 @@ exports.randomGuid = randomGuid;
 
 //generate a guid that is tested unique against id's on the current doc
 function domSafeRandomGuid() {
-    var numberOfBlocks = arguments[0] === undefined ? 4 : arguments[0];
+    var _arguments = arguments;
+    var _again = true;
 
-    function s4() {
-        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
-    }
+    _function: while (_again) {
+        numberOfBlocks = output = num = undefined;
 
-    var output = '';
-    var num = numberOfBlocks;
-    while (num > 0) {
-        output += s4();
-        if (num > 1) output += '-';
-        num--;
-    }
+        var s4 = function s4() {
+            return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+        };
 
-    if (null === document.getElementById(output)) {
-        return output;
-    } else {
-        domSafeRandomGuid(numberOfBlocks);
+        _again = false;
+        var numberOfBlocks = _arguments[0] === undefined ? 4 : _arguments[0];
+
+        var output = '';
+        var num = numberOfBlocks;
+        while (num > 0) {
+            output += s4();
+            if (num > 1) output += '-';
+            num--;
+        }
+
+        if (null === document.getElementById(output)) {
+            return output;
+        } else {
+            _arguments = [numberOfBlocks];
+            _again = true;
+            continue _function;
+        }
     }
 }
 exports.domSafeRandomGuid = domSafeRandomGuid;
